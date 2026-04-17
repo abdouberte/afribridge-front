@@ -1,3 +1,4 @@
+import './globals.css'
 import { Nunito } from "next/font/google";
 
 const nunito = Nunito({

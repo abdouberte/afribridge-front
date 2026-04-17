@@ -1,26 +1,34 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  --font-sans: 'Nunito', Verdana, Arial, sans-serif;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-afri-terra:       #C85A1E;
+  --color-afri-terra-dark:  #A8481A;
+  --color-afri-terra-light: #F9E8DC;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+  --color-afri-amber:       #D4920A;
+  --color-afri-amber-dark:  #B07810;
+  --color-afri-amber-light: #FEF3D0;
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  --color-afri-green:       #1B7A52;
+  --color-afri-green-dark:  #155E3F;
+  --color-afri-green-light: #E0F2EB;
+
+  --color-afri-cream:       #FDF6EC;
+  --color-afri-border:      #E8D0B0;
+
+  --color-afri-text:        #1C1008;
+  --color-afri-text-2:      #7A5535;
+  --color-afri-text-3:      #B89070;
+
+  --color-afri-error:       #C0392B;
+  --color-afri-error-light: #FDECEA;
+
+  --color-afri-hero:        #1C0E06;
+
+  --shadow-solid:       3px 3px 0px #E8D0B0;
+  --shadow-solid-terra: 3px 3px 0px #A8481A;
+  --shadow-solid-amber: 4px 4px 0px #B07810;
+  --shadow-solid-green: 3px 3px 0px #155E3F;
 }
