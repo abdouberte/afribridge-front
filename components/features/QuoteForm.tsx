@@ -12,6 +12,8 @@ import {
   EXCHANGE_RATE,
   QuoteResult,
 } from "@/lib/pricing";
+import { useToast } from "@/components/ui/Toast";
+import Loader from "@/components/ui/Loader";
 
 /* ─── Types ─── */
 interface Props {
@@ -204,7 +206,7 @@ function QuoteCard({
 /* ─── Composant principal ─── */
 export default function QuoteForm({ initialUrl }: Props) {
   const router = useRouter();
-
+  const toast = useToast();
   /* État global */
   const [step, setStep] = useState<Step>(initialUrl ? 2 : 1);
   const [url, setUrl] = useState(initialUrl);
@@ -282,13 +284,27 @@ export default function QuoteForm({ initialUrl }: Props) {
     if (!validateStep3() || !quote) return;
     setLoading(true);
     try {
-      // TODO: appel POST /api/orders via lib/api.ts
-      // const order = await createOrder({ ... })
-      // router.push(`/suivi?ref=${order.order_number}`)
+      // TODO: remplacer par createOrder() quand le backend est prêt
       await new Promise((r) => setTimeout(r, 1000)); // stub
-      router.push("/suivi");
+
+      // Redirection vers la page de confirmation
+      const params = new URLSearchParams({
+        ref: "AFR-2025-0001", // TODO: remplacer par order.order_number
+        total: quote.totalFcfa.toLocaleString("fr-FR"),
+        zone: ZONE_LABELS[zone],
+        name: customer.name,
+      });
+      toast.success(
+        "Commande confirmée !",
+        "Tu vas recevoir un SMS de confirmation.",
+      );
+      router.push(`/confirmation?${params.toString()}`);
     } catch {
-      setErrors({ submit: "Une erreur est survenue. Réessaie." });
+      toast.error(
+        "Une erreur est survenue.",
+        "Vérifie ta connexion et réessaie.",
+      );
+      setErrors({ submit: " " }); // garde le scroll en place
     } finally {
       setLoading(false);
     }
@@ -663,13 +679,7 @@ export default function QuoteForm({ initialUrl }: Props) {
             </div>
 
             {/* Erreur globale */}
-            {errors.submit && (
-              <div className="bg-afri-error-light border-2 border-afri-error rounded-xl px-4 py-3 mb-4">
-                <p className="text-sm font-semibold text-afri-error">
-                  ⚠ {errors.submit}
-                </p>
-              </div>
-            )}
+            {errors.submit && <div className="mb-4" />}
 
             {/* Paiement info */}
             <div className="flex gap-3 mb-5">
@@ -704,12 +714,7 @@ export default function QuoteForm({ initialUrl }: Props) {
               style={!loading ? { boxShadow: "4px 4px 0 #B07810" } : undefined}
             >
               {loading ? (
-                <span className="flex items-center justify-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-afri-text-3 animate-blink [animation-delay:0ms]" />
-                  <span className="w-2 h-2 rounded-full bg-afri-text-3 animate-blink [animation-delay:200ms]" />
-                  <span className="w-2 h-2 rounded-full bg-afri-text-3 animate-blink [animation-delay:400ms]" />
-                  Traitement en cours…
-                </span>
+                <Loader inline size="sm" message="Traitement en cours…" />
               ) : quote ? (
                 `Payer ${formatFcfa(quote.totalFcfa)} →`
               ) : (
