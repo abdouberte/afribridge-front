@@ -37,7 +37,3 @@ export const FILTER_OPTIONS: { label: string; value: OrderStatus | 'all' }[] = [
 ]
 
 export const STATUS_OPTIONS = Object.entries(STATUS_LABELS) as [OrderStatus, string][]
-
-// Mot de passe admin — côté client uniquement pour le MVP
-// Remplacer par une vraie auth (NextAuth, Supabase Auth) en production
-export const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD ?? '***REMOVED***'
