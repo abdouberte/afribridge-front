@@ -26,3 +26,28 @@ export async function createOrder(
     if (!res.ok) throw new Error('Impossible de créer la commande.')
     return res.json()
 }
+
+export async function getAllOrders(): Promise<Order[]> {
+    try {
+        const res = await fetch(`${API_BASE}/api/orders`, {
+            next: { revalidate: 0 }, // pas de cache en admin
+        })
+        if (!res.ok) throw new Error('Impossible de charger les commandes.')
+        return res.json()
+    } catch {
+        return []
+    }
+}
+
+export async function updateOrder(
+    id: string,
+    data: Partial<Pick<Order, 'status' | 'tracking_number' | 'notes'>>,
+): Promise<Order> {
+    const res = await fetch(`${API_BASE}/api/orders/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+    })
+    if (!res.ok) throw new Error('Impossible de mettre à jour la commande.')
+    return res.json()
+}
