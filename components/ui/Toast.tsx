@@ -33,10 +33,9 @@ interface ToastContextValue {
 const ToastContext = createContext<ToastContextValue | null>(null)
 
 /* ─── Config par type ─── */
-const TYPE_CONFIG: Record
-  ToastType,
-  { accent: string; bg: string; iconBg: string; iconColor: string; path: string }
-> = {
+type TypeConfig = { accent: string; bg: string; iconBg: string; iconColor: string; path: string }
+
+const TYPE_CONFIG: Record<ToastType, TypeConfig> = {
   success: {
     accent:     '#1B7A52',
     bg:         '#fff',
