@@ -17,6 +17,7 @@ import {
 } from "@/lib/admin";
 import { updateOrder } from "@/lib/api";
 import Badge from "@/components/ui/Badge";
+import { useToast } from "@/components/ui/Toast";
 
 /* ─── Login screen ─── */
 function LoginScreen({ onLogin }: { onLogin: () => void }) {
@@ -148,17 +149,14 @@ function OrderDrawer({
   onClose: () => void;
   onSaved: (updated: Order) => void;
 }) {
+  const toast = useToast();
   const [status, setStatus] = useState<OrderStatus>(order.status);
   const [tracking, setTracking] = useState(order.tracking_number ?? "");
   const [notes, setNotes] = useState(order.notes ?? "");
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
 
   async function handleSave() {
     setSaving(true);
-    setError("");
-    setSuccess(false);
     try {
       const updated = await updateOrder(order.id, {
         status,
@@ -166,10 +164,15 @@ function OrderDrawer({
         notes: notes || null,
       });
       onSaved(updated);
-      setSuccess(true);
-      setTimeout(() => setSuccess(false), 2000);
+      toast.success(
+        "Commande mise à jour",
+        `${order.order_number} → ${STATUS_LABELS[status]}`,
+      );
     } catch {
-      setError("Erreur lors de la sauvegarde. Réessaie.");
+      toast.error(
+        "Erreur de sauvegarde",
+        "Impossible de contacter le serveur. Réessaie.",
+      );
     } finally {
       setSaving(false);
     }
@@ -395,29 +398,7 @@ function OrderDrawer({
             />
           </div>
 
-          {/* Erreur / succès */}
-          {error && (
-            <p className="text-xs font-semibold text-afri-error">⚠ {error}</p>
-          )}
-          {success && (
-            <p className="text-xs font-semibold text-afri-green flex items-center gap-1">
-              <svg
-                width="12"
-                height="12"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={3}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-              Commande mise à jour.
-            </p>
-          )}
+          {/* Feedback géré par Toast */}
         </div>
 
         {/* Footer sticky */}
@@ -480,6 +461,7 @@ export default function AdminDashboard({
 }: {
   orders: Order[];
 }) {
+  const toast = useToast();
   const [authed, setAuthed] = useState(
     () =>
       typeof window !== "undefined" &&
