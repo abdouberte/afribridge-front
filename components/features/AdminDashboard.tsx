@@ -13,7 +13,7 @@ import {
   computeStats,
   FILTER_OPTIONS,
   STATUS_OPTIONS,
-  ADMIN_PASSWORD,
+  // ADMIN_PASSWORD,
 } from "@/lib/admin";
 import { updateOrder } from "@/lib/api";
 import Badge from "@/components/ui/Badge";
@@ -22,15 +22,27 @@ import Badge from "@/components/ui/Badge";
 function LoginScreen({ onLogin }: { onLogin: () => void }) {
   const [pw, setPw] = useState("");
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (pw === ADMIN_PASSWORD) {
-      sessionStorage.setItem("afri_admin", "1");
+    setLoading(true);
+    setError(false);
+    try {
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: pw }),
+      });
+      if (!res.ok) {
+        setError(true);
+        return;
+      }
       onLogin();
-    } else {
+    } catch {
       setError(true);
-      setPw("");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -69,6 +81,7 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
                   : "border-afri-border focus:border-afri-terra",
               ].join(" ")}
               autoComplete="current-password"
+              disabled={loading}
             />
             {error && (
               <p className="text-xs font-semibold text-afri-error">
@@ -78,10 +91,16 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
           </div>
           <button
             type="submit"
-            className="h-11 bg-afri-terra text-white font-extrabold text-sm rounded-xl border-2 border-afri-terra-dark hover:bg-afri-terra-dark transition-colors"
-            style={{ boxShadow: "3px 3px 0 #A8481A" }}
+            disabled={loading}
+            className={[
+              "h-11 text-white font-extrabold text-sm rounded-xl border-2 transition-colors duration-150",
+              loading
+                ? "bg-afri-terra-light border-afri-border text-afri-text-3 cursor-not-allowed"
+                : "bg-afri-terra border-afri-terra-dark hover:bg-afri-terra-dark",
+            ].join(" ")}
+            style={!loading ? { boxShadow: "3px 3px 0 #A8481A" } : undefined}
           >
-            Accéder au back-office →
+            {loading ? "Vérification…" : "Accéder au back-office →"}
           </button>
         </form>
       </div>
