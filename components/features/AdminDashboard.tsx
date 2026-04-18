@@ -606,7 +606,7 @@ export default function AdminDashboard({
           className="flex flex-col shrink-0 px-2 py-4 gap-1"
           style={{
             background: "#1C0E06",
-            width: "64px",
+            width: "clamp(64px, 15vw, 220px)",
             minWidth: "64px",
           }}
           // Desktop : sidebar élargie
