@@ -1,16 +1,16 @@
-import type { Metadata } from 'next'
-import QuoteForm from '@/components/features/quote/QuoteForm'
+import type { Metadata } from "next";
+import QuoteForm from "@/components/features/quote/QuoteForm";
 
 export const metadata: Metadata = {
-  title: 'Passer commande — AfriBridge',
+  title: "Passer commande — AfriBridge",
   description: `Obtiens un devis en FCFA et commande depuis n'importe quel site en ligne.`,
-}
+};
 
 interface Props {
-  searchParams: { url?: string }
+  searchParams: Promise<{ url?: string }>;
 }
 
-export default function CommandePage({ searchParams }: Props) {
-  const initialUrl = searchParams.url ?? ''
-  return <QuoteForm initialUrl={initialUrl} />
+export default async function CommandePage({ searchParams }: Props) {
+  const { url } = await searchParams
+  return <QuoteForm initialUrl={url ?? ''} />
 }

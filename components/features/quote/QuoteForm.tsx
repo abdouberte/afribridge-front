@@ -12,10 +12,10 @@ import {
   formatFcfa,
 } from "@/lib/pricing";
 import { useToast } from "@/components/ui/Toast";
-import QuoteStepper from "./quote/QuoteStepper";
-import StepUrl from "./quote/StepUrl";
-import StepQuote from "./quote/StepQuote";
-import StepCustomer from "./quote/StepCustomer";
+import QuoteStepper from "./QuoteStepper";
+import StepUrl from "./StepUrl";
+import StepQuote from "./StepQuote";
+import StepCustomer from "./StepCustomer";
 
 type Step = 1 | 2 | 3;
 

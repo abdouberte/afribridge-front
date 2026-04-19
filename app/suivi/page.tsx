@@ -24,11 +24,12 @@ const KENTE = [
 ];
 
 interface Props {
-  searchParams: { ref?: string };
+  searchParams: Promise<{ ref?: string }>;
 }
 
 export default async function SuiviPage({ searchParams }: Props) {
-  const ref = searchParams.ref?.trim().toUpperCase() ?? "";
+  const { ref: rawRef } = await searchParams;
+  const ref = rawRef?.trim().toUpperCase() ?? "";
   const order = ref ? await getOrderByRef(ref) : null;
 
   return (
