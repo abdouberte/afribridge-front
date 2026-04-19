@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import QuoteForm from '@/components/features/QuoteForm'
+import QuoteForm from '@/components/features/quote/QuoteForm'
 
 export const metadata: Metadata = {
   title: 'Passer commande — AfriBridge',
