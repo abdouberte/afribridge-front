@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getOrderByRef } from "@/lib/api";
-import OrderTimeline from "@/components/features/OrderTimeline";
+import OrderTimeline from "@/components/features/timeline/OrderTimeline";
 import SearchForm from "@/components/features/SearchForm";
 
 export const metadata: Metadata = {
