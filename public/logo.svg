@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <rect width="100" height="100" rx="20" fill="#1C0E06"/>
+  <rect x="0"  y="0" width="12" height="5" fill="#C85A1E"/>
+  <rect x="13" y="0" width="12" height="5" fill="#D4920A"/>
+  <rect x="26" y="0" width="12" height="5" fill="#1B7A52"/>
+  <rect x="39" y="0" width="12" height="5" fill="#C85A1E"/>
+  <rect x="52" y="0" width="12" height="5" fill="#D4920A"/>
+  <rect x="65" y="0" width="12" height="5" fill="#1B7A52"/>
+  <rect x="78" y="0" width="22" height="5" fill="#C85A1E"/>
+  <path d="M14 68 A36 36 0 0 1 86 68" stroke="#C85A1E" stroke-width="9" stroke-linecap="round"/>
+  <rect x="14" y="64" width="10" height="18" fill="#C85A1E" rx="2"/>
+  <rect x="76" y="64" width="10" height="18" fill="#C85A1E" rx="2"/>
+  <rect x="8"  y="78" width="84" height="10" fill="#D4920A" rx="3"/>
+  <text
+    x="50" y="64"
+    text-anchor="middle"
+    font-family="Arial Black, Impact, sans-serif"
+    font-weight="900"
+    font-size="28"
+    fill="white"
+  >AB</text>
+</svg>
