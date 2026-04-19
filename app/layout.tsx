@@ -11,8 +11,11 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+  ),
   title: {
-    default:  `AfriBridge — Livraison depuis nimporte quel site`,
+    default:  `AfriBridge — Livraison depuis n'importe quel site`,
     template: '%s — AfriBridge',
   },
   description:

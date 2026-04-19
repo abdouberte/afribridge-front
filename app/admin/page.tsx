@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getAllOrders } from "@/lib/api";
-import AdminDashboard from "@/components/features/AdminDashboard";
+import AdminDashboard from "@/components/features/admin/AdminDashboard";
 
 export const metadata: Metadata = {
   title: "Admin — AfriBridge",

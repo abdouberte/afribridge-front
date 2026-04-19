@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
     const session = req.cookies.get('afri_admin_session')
+    const isLogin = req.nextUrl.pathname === '/admin/login'
+    const isAuthed = session?.value === '1'
 
-    // Si pas de session et qu'on essaie d'accéder à /admin
-    if (req.nextUrl.pathname.startsWith('/admin') && session?.value !== '1') {
+    if (isLogin && isAuthed) {
+        return NextResponse.redirect(new URL('/admin', req.url))
+    }
+
+    if (!isLogin && !isAuthed) {
         return NextResponse.redirect(new URL('/admin/login', req.url))
     }
 
